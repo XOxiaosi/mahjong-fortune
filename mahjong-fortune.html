@@ -20,8 +20,6 @@
     transition-duration: 0.01ms !important;
   }
   .particle { display: none; }
-  .compass { animation: none; }
-  .compass-center-text { animation: none; }
 }
 /* ==================== CSS 变量 ==================== */
 :root {
@@ -558,12 +556,6 @@ h1 {
   width: 140px;
   height: 140px;
   position: relative;
-  animation: compassRotate 30s linear infinite;
-}
-
-@keyframes compassRotate {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
 }
 
 .compass svg { width: 100%; height: 100%; }
@@ -576,13 +568,7 @@ h1 {
   font-size: 1.5rem;
   color: var(--gold-bright);
   text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
-  animation: counterRotate 30s linear infinite;
   z-index: 2;
-}
-
-@keyframes counterRotate {
-  from { transform: translate(-50%, -50%) rotate(0deg); }
-  to { transform: translate(-50%, -50%) rotate(-360deg); }
 }
 
 /* ==================== 八字排盘 ==================== */
@@ -1013,6 +999,15 @@ h1 {
   pointer-events: none;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
+}
+
+/* 移动端：浮动按钮移至右下角，避免遮挡顶部内容 */
+@media (max-width: 768px) {
+  .tip-btn-float {
+    top: auto;
+    bottom: calc(20px + env(safe-area-inset-bottom));
+    right: calc(16px + env(safe-area-inset-right));
+  }
 }
 
 .tip-btn-float.visible {
@@ -1531,7 +1526,7 @@ h1 {
   h1 { font-size: 1.8rem; }
   .header-row { flex-direction: column; gap: 12px; }
   .tip-btn { padding: 7px 18px; font-size: 0.85rem; }
-  .tip-btn-float { top: calc(12px + env(safe-area-inset-top)); right: calc(12px + env(safe-area-inset-right)); padding: 7px 14px; font-size: 0.8rem; }
+  .tip-btn-float { bottom: calc(16px + env(safe-area-inset-bottom)); right: calc(12px + env(safe-area-inset-right)); padding: 7px 14px; font-size: 0.8rem; }
   .subtitle { font-size: 0.85rem; letter-spacing: 4px; }
   .mahjong-table { width: 340px; height: 340px; padding: 8px; }
   .tile { width: 48px; height: 64px; }
@@ -1556,7 +1551,7 @@ h1 {
 
 /* 手机 */
 @media (max-width: 480px) {
-  main { padding: 20px 12px calc(50px + env(safe-area-inset-bottom)); }
+  main { padding: 20px 12px calc(70px + env(safe-area-inset-bottom)); }
 
   /* 头部 */
   h1 { font-size: 1.4rem; letter-spacing: 2px; }
@@ -1569,7 +1564,7 @@ h1 {
   .tip-btn { padding: 6px 14px; font-size: 0.78rem; letter-spacing: 1px; }
   .tip-btn svg { width: 13px; height: 13px; }
   .tip-btn-float {
-    top: calc(8px + env(safe-area-inset-top));
+    bottom: calc(12px + env(safe-area-inset-bottom));
     right: calc(8px + env(safe-area-inset-right));
     padding: 6px 12px;
     font-size: 0.72rem;
@@ -1800,9 +1795,9 @@ h1 {
       <text x="74" y="80" text-anchor="middle" font-size="10" fill="#8a7028" font-family="serif">离</text>
       <text x="26" y="80" text-anchor="middle" font-size="10" fill="#8a7028" font-family="serif">坤</text>
       <text x="26" y="28" text-anchor="middle" font-size="10" fill="#8a7028" font-family="serif">兑</text>
-      <path d="M50 50 A18 18 0 0 1 50 14 A12 12 0 0 1 50 38 A18 18 0 0 0 50 86 A12 12 0 0 0 50 50 Z" fill="#d4af37" opacity="0.8"/>
-      <circle cx="50" cy="32" r="4" fill="#0a1f14"/>
-      <circle cx="50" cy="68" r="4" fill="#d4af37"/>
+      <path d="M 50 4 A 46 46 0 0 1 50 96 A 23 23 0 0 0 50 50 A 23 23 0 0 1 50 4 Z" fill="#d4af37" opacity="0.8"/>
+      <circle cx="50" cy="27" r="4.5" fill="#0a1f14"/>
+      <circle cx="50" cy="73" r="4.5" fill="#d4af37"/>
     </svg>
   </div>
   <div class="loading-text">正在推演八卦·排列八字·定夺方位</div>
@@ -1897,9 +1892,9 @@ h1 {
                 <text x="78" y="80" text-anchor="middle" font-size="9" fill="#8a7028" font-family="serif">坤</text>
                 <text x="22" y="80" text-anchor="middle" font-size="9" fill="#8a7028" font-family="serif">艮</text>
                 <text x="22" y="26" text-anchor="middle" font-size="9" fill="#8a7028" font-family="serif">乾</text>
-                <path d="M50 50 A20 20 0 0 1 50 10 A13 13 0 0 1 50 36 A20 20 0 0 0 50 90 A13 13 0 0 0 50 50 Z" fill="#d4af37" opacity="0.85"/>
-                <circle cx="50" cy="30" r="5" fill="#0a1f14"/>
-                <circle cx="50" cy="70" r="5" fill="#d4af37"/>
+                <path d="M 50 4 A 46 46 0 0 1 50 96 A 23 23 0 0 0 50 50 A 23 23 0 0 1 50 4 Z" fill="#d4af37" opacity="0.85"/>
+                <circle cx="50" cy="27" r="5" fill="#0a1f14"/>
+                <circle cx="50" cy="73" r="5" fill="#d4af37"/>
               </svg>
             </div>
             <div class="compass-center-text" id="compassCenter">吉</div>
