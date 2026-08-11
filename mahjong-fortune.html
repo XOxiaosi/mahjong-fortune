@@ -1463,9 +1463,43 @@ h1 {
   .factor-row { padding: 8px 12px; font-size: 0.82rem; }
   .step-card { padding: 18px 18px; }
 }
+
+/* ==================== 水印 ==================== */
+.watermark {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-30deg);
+  font-family: 'Ma Shan Zheng', cursive;
+  font-size: 6rem;
+  color: rgba(212, 175, 55, 0.05);
+  letter-spacing: 8px;
+  pointer-events: none;
+  z-index: 0;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.watermark-corner {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'ZCOOL XiaoWei', serif;
+  font-size: 0.75rem;
+  color: rgba(212, 175, 55, 0.25);
+  letter-spacing: 2px;
+  pointer-events: none;
+  z-index: 10;
+  user-select: none;
+}
 </style>
 </head>
 <body>
+
+<!-- 水印 -->
+<div class="watermark">xiaosi</div>
+<div class="watermark-corner">© xiaosi · 乾坤麻将</div>
 
 <!-- 背景层 -->
 <div class="bg-layer bg-gradient"></div>
