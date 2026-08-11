@@ -1437,6 +1437,8 @@ h1 {
 }
 
 /* ==================== 响应式 ==================== */
+
+/* 平板 */
 @media (max-width: 768px) {
   h1 { font-size: 1.8rem; }
   .header-row { flex-direction: column; gap: 12px; }
@@ -1462,6 +1464,176 @@ h1 {
   .relation-node-char { font-size: 1.4rem; width: 40px; height: 40px; }
   .factor-row { padding: 8px 12px; font-size: 0.82rem; }
   .step-card { padding: 18px 18px; }
+}
+
+/* 手机 */
+@media (max-width: 480px) {
+  main { padding: 20px 12px 50px; }
+
+  /* 头部 */
+  h1 { font-size: 1.4rem; letter-spacing: 2px; }
+  .subtitle { font-size: 0.72rem; letter-spacing: 2px; }
+  .title-decoration { width: 30px; margin: 0 8px; }
+  .today-info { font-size: 0.78rem; letter-spacing: 1px; margin-top: 10px; }
+  .header-row { gap: 10px; }
+
+  /* 打赏按钮 */
+  .tip-btn { padding: 6px 14px; font-size: 0.78rem; letter-spacing: 1px; }
+  .tip-btn svg { width: 13px; height: 13px; }
+  .tip-btn-float { top: 10px; right: 10px; padding: 6px 12px; font-size: 0.72rem; }
+
+  /* 输入区 */
+  .input-card { padding: 24px 18px; }
+  .input-card h2 { font-size: 1.15rem; margin-bottom: 22px; }
+  .input-group { margin-bottom: 16px; }
+  .input-group label { font-size: 0.85rem; margin-bottom: 6px; }
+  .input-group input,
+  .input-group select { padding: 10px 12px; font-size: 0.9rem; }
+  .calculate-btn { padding: 13px; font-size: 1.15rem; letter-spacing: 4px; }
+
+  /* 加载动画 */
+  .bagua-spin { width: 72px; height: 72px; }
+  .loading-text { font-size: 0.9rem; letter-spacing: 3px; margin-top: 18px; }
+
+  /* 结果区块 */
+  .result-block { margin-bottom: 24px; }
+  .block-title { font-size: 1rem; letter-spacing: 2px; gap: 8px; margin-bottom: 12px; }
+  .block-title::before { width: 3px; height: 16px; }
+
+  /* 麻将桌 */
+  .mahjong-table {
+    width: 280px; height: 280px;
+    padding: 6px; gap: 4px;
+    border-width: 4px;
+    border-radius: 14px;
+  }
+  .mahjong-table::before { inset: 6px; border-radius: 10px; }
+  .tile { width: 38px; height: 50px; border-radius: 6px; }
+  .tile-char { font-size: 1.2rem; }
+  .seat-label { font-size: 0.62rem; letter-spacing: 1px; margin-top: 4px; }
+  .seat-score { font-size: 0.72rem; }
+  .compass { width: 76px; height: 76px; }
+  .compass-center-text { font-size: 1.1rem; }
+  .best-badge { font-size: 0.6rem; padding: 2px 8px; top: -10px; }
+
+  /* 八字排盘 */
+  .bazi-chart { gap: 6px; }
+  .pillar { min-width: 60px; padding: 10px 8px; }
+  .pillar-label { font-size: 0.7rem; }
+  .pillar-gan, .pillar-zhi { font-size: 1.3rem; margin: 2px 0; }
+  .pillar-element { font-size: 0.68rem; margin-top: 4px; }
+  .pillar-shishen { font-size: 0.62rem; }
+
+  /* 五行分析 */
+  .element-analysis { gap: 10px; }
+  .element-bar-item { min-width: 100px; flex: 1 1 100px; }
+  .element-bar-name { font-size: 1rem; }
+  .element-bar-count { font-size: 0.78rem; }
+  .element-bar-track { height: 8px; }
+
+  /* 方位评分卡片 */
+  .direction-cards { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .dir-card { padding: 14px 10px; }
+  .dir-card-char { font-size: 1.8rem; }
+  .dir-card-element { font-size: 0.72rem; margin-bottom: 8px; }
+  .dir-card-score { font-size: 1.5rem; }
+  .dir-card-bar { height: 5px; margin-bottom: 6px; }
+  .dir-card-desc { font-size: 0.7rem; line-height: 1.5; }
+  .luck-tag { font-size: 0.65rem; padding: 1px 7px; }
+
+  /* 卦象 */
+  .hexagram-section { padding: 18px 16px; gap: 16px; }
+  .hexagram-name { font-size: 1.4rem; }
+  .hexagram-trigrams { font-size: 0.72rem; }
+  .hex-line { width: 72px; height: 8px; }
+  .hex-line.yin .half { width: 30px; height: 8px; }
+  .hexagram-interpretation { font-size: 0.85rem; line-height: 1.7; }
+
+  /* 推演过程 */
+  .deduction-flow { padding-left: 28px; }
+  .deduction-flow::before { left: 13px; }
+  .step-badge { left: -28px; width: 28px; height: 28px; font-size: 0.85rem; }
+  .step-card { padding: 16px 14px; }
+  .step-title { font-size: 1rem; letter-spacing: 2px; }
+  .step-subtitle { font-size: 0.7rem; }
+  .step-body { font-size: 0.82rem; line-height: 1.75; }
+  .step-header { gap: 8px; margin-bottom: 10px; padding-bottom: 10px; }
+
+  /* 命主平衡条 */
+  .balance-row { gap: 6px; margin: 6px 0; }
+  .balance-label { font-size: 0.72rem; width: 56px; }
+  .balance-bar { height: 18px; }
+  .balance-fill-support, .balance-fill-weaken { font-size: 0.62rem; }
+  .balance-verdict { font-size: 0.78rem; padding: 6px 10px; }
+
+  /* 生克关系图 */
+  .relation-map { gap: 4px; }
+  .relation-node { min-width: 44px; }
+  .relation-node-char { font-size: 1.1rem; width: 34px; height: 34px; border-width: 1.5px; }
+  .relation-node-label { font-size: 0.6rem; }
+  .relation-arrow { min-width: 36px; }
+  .relation-arrow-text { font-size: 0.8rem; padding: 1px 6px; }
+
+  /* 方位演算网格 */
+  .dir-deduction-grid { grid-template-columns: 1fr; gap: 8px; }
+  .dir-deduction-item { padding: 10px 12px; }
+  .dd-dir-char { font-size: 1.1rem; width: 26px; height: 26px; }
+  .dd-dir-info { font-size: 0.72rem; }
+  .dd-relations { font-size: 0.72rem; line-height: 1.6; }
+  .dd-relations .rel-tag { font-size: 0.62rem; padding: 1px 5px; }
+
+  /* 因子分解表 */
+  .factor-ledger { margin-top: 10px; }
+  .factor-row { padding: 7px 10px; font-size: 0.76rem; gap: 8px; }
+  .factor-name .factor-desc { font-size: 0.66rem; display: block; margin-left: 0; margin-top: 2px; }
+  .factor-value { font-size: 0.88rem; min-width: 42px; }
+  .factor-total .factor-value { font-size: 1.1rem; }
+
+  /* 置信度 */
+  .confidence-label { font-size: 0.72rem; }
+  .confidence-track { height: 6px; }
+
+  /* 建议面板 */
+  .advice-panel { padding: 20px 16px; }
+  .advice-text { font-size: 0.85rem; line-height: 1.85; letter-spacing: 0.5px; }
+  .advice-panel::before { font-size: 2.2rem; top: 10px; right: 14px; }
+
+  /* 重新占卜按钮 */
+  .recalc-btn { padding: 11px 28px; font-size: 0.95rem; letter-spacing: 3px; margin-top: 30px; }
+
+  /* 弹窗 */
+  .tip-modal { padding: 24px 20px 22px; max-width: 280px; }
+  .tip-modal-title { font-size: 1.05rem; }
+  .tip-modal-subtitle { font-size: 0.75rem; margin-bottom: 14px; }
+  .tip-qr-wrapper { padding: 8px; margin-bottom: 12px; }
+  .tip-qr-wrapper img { width: 180px; height: 180px; }
+  .tip-modal-hint { font-size: 0.72rem; }
+  .tip-modal-close { width: 26px; height: 26px; font-size: 1.1rem; top: 8px; right: 10px; }
+
+  /* 水印 */
+  .watermark { font-size: 3.5rem; letter-spacing: 4px; }
+  .watermark-corner { font-size: 0.65rem; bottom: 8px; }
+
+  /* 免责声明 */
+  .disclaimer { font-size: 0.7rem; margin-top: 28px; }
+}
+
+/* 超小屏 */
+@media (max-width: 360px) {
+  h1 { font-size: 1.2rem; }
+  .mahjong-table { width: 250px; height: 250px; padding: 5px; gap: 3px; }
+  .tile { width: 34px; height: 44px; }
+  .tile-char { font-size: 1rem; }
+  .compass { width: 64px; height: 64px; }
+  .compass-center-text { font-size: 0.9rem; }
+  .bazi-chart { gap: 4px; }
+  .pillar { min-width: 52px; padding: 8px 6px; }
+  .pillar-gan, .pillar-zhi { font-size: 1.1rem; }
+  .direction-cards { gap: 8px; }
+  .dir-card { padding: 12px 8px; }
+  .dir-card-char { font-size: 1.5rem; }
+  .dir-card-score { font-size: 1.3rem; }
+  .watermark { font-size: 2.8rem; }
 }
 
 /* ==================== 水印 ==================== */
