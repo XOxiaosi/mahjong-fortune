@@ -2975,6 +2975,32 @@ function createParticles() {
   }
 }
 
+// ==================== Cookie 记忆功能 ====================
+
+function setCookie(name, value, days) {
+  const expires = new Date(Date.now() + days * 864e5).toUTCString();
+  document.cookie = name + '=' + encodeURIComponent(value) + ';expires=' + expires + ';path=/;SameSite=Lax';
+}
+
+function getCookie(name) {
+  const match = document.cookie.match('(^|; )' + name + '=([^;]*)');
+  return match ? decodeURIComponent(match[2]) : '';
+}
+
+function saveUserInfo(birthDate, birthHour, gender) {
+  setCookie('mj_birthDate', birthDate, 365);
+  setCookie('mj_birthHour', birthHour, 365);
+  setCookie('mj_gender', gender, 365);
+}
+
+function loadUserInfo() {
+  return {
+    birthDate: getCookie('mj_birthDate'),
+    birthHour: getCookie('mj_birthHour'),
+    gender: getCookie('mj_gender')
+  };
+}
+
 // ==================== 主流程 ====================
 
 function handleCalculate() {
@@ -2990,6 +3016,9 @@ function handleCalculate() {
     alert('请选择您的出生时辰');
     return;
   }
+
+  // 保存用户信息到 Cookie
+  saveUserInfo(birthDateStr, hourVal, gender);
 
   const parts = birthDateStr.split('-');
   const year = parseInt(parts[0]);
@@ -3061,8 +3090,11 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('calculateBtn').addEventListener('click', handleCalculate);
   document.getElementById('recalcBtn').addEventListener('click', handleRecalc);
 
-  // 设置默认日期
-  document.getElementById('birthDate').value = '1995-06-15';
+  // 从 Cookie 读取上次输入的信息，没有则用默认值
+  const saved = loadUserInfo();
+  document.getElementById('birthDate').value = saved.birthDate || '1995-06-15';
+  if (saved.birthHour) document.getElementById('birthHour').value = saved.birthHour;
+  if (saved.gender) document.getElementById('gender').value = saved.gender;
 
   // 打赏弹窗
   const tipModal = document.getElementById('tipModal');
