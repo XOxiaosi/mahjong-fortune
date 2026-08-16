@@ -925,6 +925,154 @@ h1 {
   opacity: 0.6;
 }
 
+/* ==================== 实时指南针 ==================== */
+.compass-tool {
+  text-align: center;
+  padding: 20px;
+}
+
+.compass-visual {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto 16px;
+}
+
+.compass-dial {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: radial-gradient(circle, #0d2818 0%, #051810 100%);
+  border: 3px solid #d4af37;
+  box-shadow: 0 0 20px rgba(212,175,55,0.2), inset 0 0 30px rgba(0,0,0,0.5);
+  position: relative;
+  overflow: hidden;
+}
+
+.compass-dial svg {
+  width: 100%;
+  height: 100%;
+  transition: transform 0.1s linear;
+}
+
+.compass-needle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 80px;
+  margin-left: -2px;
+  margin-top: -40px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.compass-needle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-bottom: 40px solid #e63946;
+  margin-left: -4px;
+}
+
+.compass-needle::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 40px solid #f5efde;
+  margin-left: -4px;
+  opacity: 0.4;
+}
+
+.compass-center-dot {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  background: #d4af37;
+  border-radius: 50%;
+  z-index: 11;
+  box-shadow: 0 0 6px rgba(212,175,55,0.6);
+}
+
+.compass-heading {
+  font-size: 1.8rem;
+  color: #d4af37;
+  font-weight: bold;
+  margin-bottom: 4px;
+  font-family: serif;
+}
+
+.compass-direction-label {
+  font-size: 1.1rem;
+  color: #f5efde;
+  margin-bottom: 12px;
+  letter-spacing: 2px;
+}
+
+.compass-target-hint {
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.3);
+  border-radius: 8px;
+  padding: 10px 14px;
+  margin-bottom: 16px;
+  font-size: 0.88rem;
+  color: #f5efde;
+  display: none;
+}
+
+.compass-target-hint.visible {
+  display: block;
+}
+
+.compass-target-hint .target-dir {
+  color: #d4af37;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+.compass-btn {
+  background: linear-gradient(135deg, #d4af37, #b8941f);
+  color: #0a1f14;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  letter-spacing: 2px;
+  font-family: serif;
+  transition: all 0.2s;
+  min-height: 44px;
+}
+
+.compass-btn:active {
+  transform: scale(0.96);
+}
+
+.compass-btn.active {
+  background: linear-gradient(135deg, #e63946, #c1121f);
+  color: #f5efde;
+}
+
+.compass-status {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
 /* ==================== 头部打赏按钮 ==================== */
 .header-row {
   display: flex;
@@ -1704,6 +1852,13 @@ h1 {
 
   /* 免责声明 */
   .disclaimer { font-size: 0.7rem; margin-top: 28px; }
+
+  /* 实时指南针 */
+  .compass-visual { width: 160px; height: 160px; }
+  .compass-heading { font-size: 1.4rem; }
+  .compass-direction-label { font-size: 0.95rem; }
+  .compass-target-hint { font-size: 0.78rem; padding: 8px 10px; }
+  .compass-btn { padding: 10px 24px; font-size: 0.9rem; }
 }
 
 /* 超小屏 */
@@ -1927,6 +2082,50 @@ h1 {
       <div class="bazi-chart" id="baziChart"></div>
     </div>
 
+    <!-- 实时指南针 -->
+    <div class="result-block">
+      <div class="block-title">实时指南针 · 定位吉位</div>
+      <div class="compass-tool">
+        <div class="compass-target-hint" id="compassTargetHint">
+          您的最佳座位在 <span class="target-dir" id="compassTargetDir">东方</span>，请转动手机使红色指针指向该方位
+        </div>
+        <div class="compass-visual">
+          <div class="compass-dial" id="compassDial">
+            <svg viewBox="0 0 200 200">
+              <!-- 外圈刻度 -->
+              <circle cx="100" cy="100" r="95" fill="none" stroke="#d4af37" stroke-width="1" opacity="0.3"/>
+              <circle cx="100" cy="100" r="85" fill="none" stroke="#d4af37" stroke-width="0.5" opacity="0.2"/>
+              <!-- 主方位刻度线 -->
+              <line x1="100" y1="5" x2="100" y2="20" stroke="#d4af37" stroke-width="2"/>
+              <line x1="100" y1="180" x2="100" y2="195" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+              <line x1="5" y1="100" x2="20" y2="100" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+              <line x1="180" y1="100" x2="195" y2="100" stroke="#d4af37" stroke-width="1.5" opacity="0.6"/>
+              <!-- 次方位刻度线 -->
+              <line x1="33" y1="33" x2="43" y2="43" stroke="#d4af37" stroke-width="1" opacity="0.4"/>
+              <line x1="167" y1="33" x2="157" y2="43" stroke="#d4af37" stroke-width="1" opacity="0.4"/>
+              <line x1="33" y1="167" x2="43" y2="157" stroke="#d4af37" stroke-width="1" opacity="0.4"/>
+              <line x1="167" y1="167" x2="157" y2="157" stroke="#d4af37" stroke-width="1" opacity="0.4"/>
+              <!-- 方位文字 -->
+              <text x="100" y="30" text-anchor="middle" font-size="16" fill="#e63946" font-family="serif" font-weight="bold">北</text>
+              <text x="100" y="178" text-anchor="middle" font-size="14" fill="#d4af37" font-family="serif">南</text>
+              <text x="25" y="106" text-anchor="middle" font-size="14" fill="#d4af37" font-family="serif">西</text>
+              <text x="175" y="106" text-anchor="middle" font-size="14" fill="#d4af37" font-family="serif">东</text>
+              <text x="42" y="48" text-anchor="middle" font-size="10" fill="#8a7028" font-family="serif">西北</text>
+              <text x="158" y="48" text-anchor="middle" font-size="10" fill="#8a7028" font-family="serif">东北</text>
+              <text x="42" y="162" text-anchor="middle" font-size="10" fill="#8a7028" font-family="serif">西南</text>
+              <text x="158" y="162" text-anchor="middle" font-size="10" fill="#8a7028" font-family="serif">东南</text>
+            </svg>
+          </div>
+          <div class="compass-needle" id="compassNeedle"></div>
+          <div class="compass-center-dot"></div>
+        </div>
+        <div class="compass-heading" id="compassHeading">--°</div>
+        <div class="compass-direction-label" id="compassDirLabel">点击下方按钮开启指南针</div>
+        <button class="compass-btn" id="compassBtn">开启指南针</button>
+        <div class="compass-status" id="compassStatus"></div>
+      </div>
+    </div>
+
     <!-- 五行分析 -->
     <div class="result-block">
       <div class="block-title">五行力量分析</div>
@@ -2003,10 +2202,10 @@ const ZHI_WUXING = [4,2,0,0,2,1,1,2,3,3,2,4];
 
 // 方位数据 (麻将四方位)
 const DIRECTIONS = [
-  { name: '东', element: 0, elementName: '木', class: 'seat-east', key: 'east' },
-  { name: '南', element: 1, elementName: '火', class: 'seat-south', key: 'south' },
-  { name: '西', element: 3, elementName: '金', class: 'seat-west', key: 'west' },
-  { name: '北', element: 4, elementName: '水', class: 'seat-north', key: 'north' }
+  { name: '东', element: 0, elementName: '木', class: 'seat-east', key: 'east', angle: 90 },
+  { name: '南', element: 1, elementName: '火', class: 'seat-south', key: 'south', angle: 180 },
+  { name: '西', element: 3, elementName: '金', class: 'seat-west', key: 'west', angle: 270 },
+  { name: '北', element: 4, elementName: '水', class: 'seat-north', key: 'north', angle: 0 }
 ];
 
 // 节气日期 (用于判定月柱) [月份, 日期, 对应地支索引]
@@ -2718,6 +2917,16 @@ function renderTableSeats(dirScores) {
   // 更新罗盘中心文字
   const bestDir = dirScores.find(s => s.isBest);
   document.getElementById('compassCenter').textContent = bestDir.direction.name;
+
+  // 更新指南针目标方位提示
+  const compassTargetDir = document.getElementById('compassTargetDir');
+  const compassTargetHint = document.getElementById('compassTargetHint');
+  if (compassTargetDir && compassTargetHint) {
+    compassTargetDir.textContent = bestDir.direction.name + '方';
+    compassTargetHint.classList.add('visible');
+    // 保存目标方位角度到全局变量
+    window.compassTargetHeading = bestDir.direction.angle;
+  }
 }
 
 function renderAdvice(bazi, todayInfo, dirScores, hexagram) {
@@ -3001,6 +3210,148 @@ function loadUserInfo() {
   };
 }
 
+// ==================== 实时指南针功能 ====================
+
+let compassActive = false;
+let compassHeading = 0;
+
+function getDirectionLabel(heading) {
+  const dirs = [
+    { min: 337.5, max: 360, label: '北' },
+    { min: 0, max: 22.5, label: '北' },
+    { min: 22.5, max: 67.5, label: '东北' },
+    { min: 67.5, max: 112.5, label: '东' },
+    { min: 112.5, max: 157.5, label: '东南' },
+    { min: 157.5, max: 202.5, label: '南' },
+    { min: 202.5, max: 247.5, label: '西南' },
+    { min: 247.5, max: 292.5, label: '西' },
+    { min: 292.5, max: 337.5, label: '西北' }
+  ];
+  for (const d of dirs) {
+    if (heading >= d.min && heading < d.max) return d.label;
+  }
+  return '北';
+}
+
+function handleCompassOrientation(event) {
+  let heading = 0;
+
+  // iOS: webkitCompassHeading (与真实方位一致，0=北)
+  if (typeof event.webkitCompassHeading !== 'undefined') {
+    heading = event.webkitCompassHeading;
+  }
+  // Android: alpha (需要转换)
+  else if (typeof event.alpha !== 'undefined' && event.alpha !== null) {
+    // deviceorientationabsolute 更准确
+    if (event.absolute === false || event.absolute === undefined) {
+      heading = 360 - event.alpha;
+    } else {
+      heading = 360 - event.alpha;
+    }
+  } else {
+    return;
+  }
+
+  // 确保在 0-360 范围内
+  heading = (heading + 360) % 360;
+  compassHeading = heading;
+
+  // 旋转罗盘表盘（反方向旋转，使北方对准当前朝向）
+  const dial = document.getElementById('compassDial');
+  if (dial) {
+    dial.querySelector('svg').style.transform = `rotate(${-heading}deg)`;
+  }
+
+  // 更新角度显示
+  const headingEl = document.getElementById('compassHeading');
+  if (headingEl) {
+    headingEl.textContent = Math.round(heading) + '°';
+  }
+
+  // 更新方位标签
+  const dirLabel = document.getElementById('compassDirLabel');
+  if (dirLabel) {
+    const label = getDirectionLabel(heading);
+    dirLabel.textContent = label + '方';
+
+    // 如果接近目标方位，高亮提示
+    const target = window.compassTargetHeading;
+    if (target !== undefined) {
+      let diff = Math.abs(heading - target);
+      if (diff > 180) diff = 360 - diff;
+      if (diff < 15) {
+        dirLabel.textContent = '✅ 已对准 ' + label + '方！';
+        dirLabel.style.color = '#4ade80';
+      } else {
+        dirLabel.style.color = '#f5efde';
+      }
+    }
+  }
+}
+
+async function toggleCompass() {
+  const btn = document.getElementById('compassBtn');
+  const status = document.getElementById('compassStatus');
+
+  if (compassActive) {
+    // 关闭指南针
+    window.removeEventListener('deviceorientation', handleCompassOrientation);
+    window.removeEventListener('deviceorientationabsolute', handleCompassOrientation);
+    compassActive = false;
+    btn.textContent = '开启指南针';
+    btn.classList.remove('active');
+    document.getElementById('compassHeading').textContent = '--°';
+    document.getElementById('compassDirLabel').textContent = '点击下方按钮开启指南针';
+    document.getElementById('compassDirLabel').style.color = '#f5efde';
+    document.getElementById('compassDial').querySelector('svg').style.transform = '';
+    status.textContent = '';
+    return;
+  }
+
+  // iOS 13+ 需要请求权限
+  if (typeof DeviceOrientationEvent !== 'undefined' &&
+      typeof DeviceOrientationEvent.requestPermission === 'function') {
+    try {
+      const permission = await DeviceOrientationEvent.requestPermission();
+      if (permission !== 'granted') {
+        status.textContent = '⚠ 需要授权才能使用指南针功能';
+        return;
+      }
+    } catch (e) {
+      status.textContent = '⚠ 无法获取传感器权限：' + e.message;
+      return;
+    }
+  }
+
+  // 检查是否支持方向传感器
+  if (typeof DeviceOrientationEvent === 'undefined') {
+    status.textContent = '⚠ 当前设备不支持方向传感器';
+    return;
+  }
+
+  // 尝试使用 deviceorientationabsolute (Android)
+  if ('ondeviceorientationabsolute' in window) {
+    window.addEventListener('deviceorientationabsolute', handleCompassOrientation);
+  } else {
+    window.addEventListener('deviceorientation', handleCompassOrientation, true);
+  }
+
+  compassActive = true;
+  btn.textContent = '关闭指南针';
+  btn.classList.add('active');
+  status.textContent = '🔑 请水平持握手机，转动身体寻找最佳方位';
+
+  // 2秒后如果没收到数据，提示兼容性问题
+  setTimeout(() => {
+    if (compassActive && compassHeading === 0) {
+      const statusEl = document.getElementById('compassStatus');
+      if (statusEl.textContent.includes('水平持握')) {
+        statusEl.textContent = '⚠ 当前设备可能不支持指南针，请尝试在手机浏览器中打开';
+      }
+    }
+  }, 2000);
+}
+
 // ==================== 主流程 ====================
 
 function handleCalculate() {
@@ -3089,6 +3440,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('calculateBtn').addEventListener('click', handleCalculate);
   document.getElementById('recalcBtn').addEventListener('click', handleRecalc);
+  document.getElementById('compassBtn').addEventListener('click', toggleCompass);
 
   // 从 Cookie 读取上次输入的信息，没有则用默认值
   const saved = loadUserInfo();
